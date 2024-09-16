@@ -23,27 +23,6 @@ from adminDashboard import AdminDashboardWindow
 from userRegistration import RegisterWindow
 from userForgotPass import ForgotWindow
 
-# Update checking
-CURRENT_VERSION = "1.0"
-VERSION_INFO_URL = "https://hostel-management-system---aux.web.app/version_info.json"
-
-def check_for_updates():
-    try:
-        response = requests.get(VERSION_INFO_URL)
-        if response.status_code == 200:
-            version_info = response.json()
-            latest_version = version_info["latest_version"]
-            if latest_version != CURRENT_VERSION:
-                notify_update_available(version_info["update_url"])
-    except Exception as e:
-        print(f"Error checking for updates: {e}")
-
-def notify_update_available(update_url):
-    while True:
-        result = messagebox.askyesno("Update Available", "A new version of the application is available. Would you like to update?")
-        if result:
-            import webbrowser
-            webbrowser.open(update_url)
 
 # Suppress specific warnings
 warnings.filterwarnings("ignore", message="CTkLabel Warning: Given image is not CTkImage but <class 'PIL.ImageTk.PhotoImage'>. Image can not be scaled on HighDPI displays, use CTkImage instead.\n")
@@ -122,9 +101,6 @@ class LoginWindow(tk.Tk):
 
         # Disable window resizing
         self.resizable(False, False)
-
-        # Automatically check for updates when the login window loads
-        self.after(1000, check_for_updates)
 
         # Load the image
         img1 = Image.open(resource_path("Assets/background.jpg"))
